@@ -9,7 +9,7 @@ namespace Api.Models
         public string Description { get; set; }
         public string Content { get; set; }
         public string Category { get; set; }
-        public List<string> Tags { get; set; }
+        public string Tags { get; set; }
         public string Author { get; set; }
         public int AuthorId { get; set; }
         public string AuthorName { get; set; }

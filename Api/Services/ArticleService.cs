@@ -17,12 +17,7 @@ namespace Api.Services
                     Description = "Test Article",
                     Content = "<p>This a test article</p>",
                     Category = "test",
-                    Tags = new List<string>
-                    {
-                        "test",
-                        "normal",
-                        "single"
-                    },
+                    Tags = "test,normal,hello",
                     Author = "testauthor",
                     AuthorId = 1,
                     AuthorName = "test author name"
@@ -34,12 +29,7 @@ namespace Api.Services
                     Description = "Test Article",
                     Content = "<p>This a test article</p>",
                     Category = "test",
-                    Tags = new List<string>
-                    {
-                        "test",
-                        "normal",
-                        "single"
-                    },
+                    Tags = "test,normal,hello",
                     Author = "testauthor",
                     AuthorId = 1,
                     AuthorName = "test author name"
