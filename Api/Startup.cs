@@ -1,5 +1,7 @@
 using Api.Repositories;
-using Api.Services;
+using Api.Extensions.ServiceExtensions;
+using Autofac;
+
 namespace Api;
 
 public class Startup
@@ -13,7 +15,6 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddScoped<ArticleService>();
         services.AddSqlite<ArticleContext>("Data Source=Api.db");
         
         services.AddControllers();
@@ -36,5 +37,10 @@ public class Startup
         {
             endpoints.MapControllers();
         });
+    }
+
+    public void ConfigureContainer(ContainerBuilder builder)
+    {
+        builder.RegisterModule<AutofacModuleRegister>();
     }
 }

@@ -1,5 +1,5 @@
 using Api.Models;
-using Api.Services;
+using Api.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -8,9 +8,9 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class ArticleController : ControllerBase
     {
-        private ArticleService _service;
+        private readonly IArticleService _service;
 
-        public ArticleController (ArticleService service)
+        public ArticleController (IArticleService service)
         {
             _service = service;
         }
