@@ -1,10 +1,11 @@
-using Api.Models;
+using Api.IServices;
 using Api.Data;
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
-    public class ArticleService
+    public class ArticleService : IArticleService
     {
         private readonly ArticleContext _context;
         public ArticleService(ArticleContext context)
@@ -35,7 +36,7 @@ namespace Api.Services
             return article;
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             var articleToDelete = _context.Articles.Find(id);
             if (articleToDelete is null)

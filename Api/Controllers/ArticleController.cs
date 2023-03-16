@@ -67,7 +67,7 @@ namespace Api.Controllers
             if (article is null)
                 return NotFound();
 
-            _service.Delete(id);
+            _service.DeleteById(id);
 
             return NoContent();
         }
