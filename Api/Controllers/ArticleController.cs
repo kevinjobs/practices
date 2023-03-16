@@ -8,16 +8,23 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class ArticleController : ControllerBase
     {
+        private ArticleService _service;
+
+        public ArticleController (ArticleService service)
+        {
+            _service = service;
+        }
+
         [HttpGet]
         public ActionResult<List<Article>> GetAll()
         {
-            return ArticleService.GetAll();
+            return _service.FindAll();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Article> Get(int id)
         {
-            var article = ArticleService.Get(id);
+            var article = _service.FindById(id);
 
             if(article == null)
             {
@@ -30,7 +37,7 @@ namespace Api.Controllers
         [HttpPost]
         public IActionResult Create(Article article)
         {
-            ArticleService.Add(article);
+            _service.Add(article);
             return CreatedAtAction(nameof(Get), new { id = article.Id }, article);
         }
 
@@ -42,13 +49,13 @@ namespace Api.Controllers
                 return BadRequest();
             }
 
-            var existed = ArticleService.Get(id);
+            var existed = _service.FindById(id);
             if (existed is null)
             {
                 return NotFound();
             }
 
-            ArticleService.Update(article);
+            _service.Update(article);
 
             return NoContent();
         }
@@ -56,11 +63,11 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var article = ArticleService.Get(id);
+            var article = _service.FindById(id);
             if (article is null)
                 return NotFound();
 
-            ArticleService.Delete(id);
+            _service.Delete(id);
 
             return NoContent();
         }

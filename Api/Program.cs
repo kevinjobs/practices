@@ -1,4 +1,5 @@
 using Api.Data;
+using Api.Services;
 
 namespace Api
 {
@@ -9,6 +10,7 @@ namespace Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<ArticleService>();
             builder.Services.AddSqlite<ArticleContext>("Data Source=Api.db");
 
             builder.Services.AddControllers();

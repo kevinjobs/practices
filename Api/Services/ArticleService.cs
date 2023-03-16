@@ -1,66 +1,55 @@
 using Api.Models;
+using Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
-    public static class ArticleService
+    public class ArticleService
     {
-        static List<Article> Articles { get; }
-        static int nextId = 3;
-        static ArticleService()
+        private readonly ArticleContext _context;
+        public ArticleService(ArticleContext context)
         {
-            Articles = new List<Article>
+            _context = context;
+        }
+
+        public List<Article> FindAll()
+        {
+            return _context.Articles
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public Article? FindById(int id)
+        {
+            return _context.Articles
+                //.Include()
+                .AsNoTracking()
+                .SingleOrDefault(p => p.Id == id);
+        }
+
+        public Article Add(Article article)
+        {
+            _context.Articles.Add(article);
+            _context.SaveChanges();
+
+            return article;
+        }
+
+        public void Delete(int id)
+        {
+            var articleToDelete = _context.Articles.Find(id);
+            if (articleToDelete is null)
             {
-                new Article
-                {
-                    Id = 1,
-                    Title = "Test",
-                    Description = "Test Article",
-                    Content = "<p>This a test article</p>",
-                    Category = "test",
-                    Tags = "test,normal,hello",
-                    Author = "testauthor",
-                    AuthorId = 1,
-                    AuthorName = "test author name"
-                },
-                new Article
-                {
-                    Id = 2,
-                    Title = "Test2",
-                    Description = "Test Article",
-                    Content = "<p>This a test article</p>",
-                    Category = "test",
-                    Tags = "test,normal,hello",
-                    Author = "testauthor",
-                    AuthorId = 1,
-                    AuthorName = "test author name"
-                }
-            };
+                throw new NullReferenceException("No this article");
+            }
+
+            _context.Articles.Remove(articleToDelete);
+            _context.SaveChanges();
         }
 
-        public static List<Article> GetAll() => Articles;
-
-        public static Article Get(int id) => Articles.FirstOrDefault(x => x.Id == id);
-
-        public static void Add(Article article)
+        public void Update(Article article)
         {
-            article.Id = nextId++;
-            Articles.Add(article);
-        }
-
-        public static void Delete(int id)
-        {
-            var article = Get(id);
-            if (article is null)
-                return;
-            Articles.Remove(article);
-        }
-
-        public static void Update(Article article)
-        {
-            var index = Articles.FindIndex(p => p.Id == article.Id);
-            if (index == -1)
-                return;
-            Articles[index] = article;
+            //
         }
     }
 }
