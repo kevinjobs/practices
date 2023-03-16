@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Api.Models;
 
-namespace Api.Data;
+namespace Api.Repositories;
 
 public class ArticleContext : DbContext
 {

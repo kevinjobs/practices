@@ -1,5 +1,5 @@
 using Api.IServices;
-using Api.Data;
+using Api.Repositories;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
