@@ -1,9 +1,9 @@
-using Api.Models;
+﻿using Api.Models;
 using System.Linq.Expressions;
 
-namespace Api.IServices;
+namespace Api.IRepositories;
 
-public interface IArticleService
+public interface IArticleRepository
 {
     void Add(Article model);
     void Delete(Article model);

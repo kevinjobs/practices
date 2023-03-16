@@ -1,55 +1,36 @@
 using Api.IServices;
-using Api.Repositories;
 using Api.Models;
-using Microsoft.EntityFrameworkCore;
+using Api.IRepositories;
+using System.Linq.Expressions;
 
 namespace Api.Services;
 
 public class ArticleService : IArticleService
 {
-    private readonly ArticleContext _context;
-    public ArticleService(ArticleContext context)
+    private readonly IArticleRepository _dal;
+
+    public ArticleService(IArticleRepository dal)
     {
-        _context = context;
+        _dal = dal;
     }
 
-    public List<Article> FindAll()
+    public void Add(Article model)
     {
-        return _context.Articles
-            .AsNoTracking()
-            .ToList();
+        _dal.Add(model);
     }
 
-    public Article? FindById(int id)
+    public void Delete(Article model)
     {
-        return _context.Articles
-            //.Include()
-            .AsNoTracking()
-            .SingleOrDefault(p => p.Id == id);
+        _dal.Delete(model);
     }
 
-    public Article Add(Article article)
+    public void Update(Article model)
     {
-        _context.Articles.Add(article);
-        _context.SaveChanges();
-
-        return article;
+        _dal.Update(model);
     }
 
-    public void DeleteById(int id)
+    public List<Article> Query(Expression<Func<Article, bool>> expression)
     {
-        var articleToDelete = _context.Articles.Find(id);
-        if (articleToDelete is null)
-        {
-            throw new NullReferenceException("No this article");
-        }
-
-        _context.Articles.Remove(articleToDelete);
-        _context.SaveChanges();
-    }
-
-    public void Update(Article article)
-    {
-        //
+        return _dal.Query(expression);
     }
 }
