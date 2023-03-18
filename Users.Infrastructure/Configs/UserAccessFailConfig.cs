@@ -9,7 +9,7 @@ namespace Users.Infrastructure.Configs
         public void Configure(EntityTypeBuilder<UserAccessFail> builder)
         {
             builder.ToTable("T_UserAccessFails");
-            builder.Property("lockout");
+            builder.Property("lockOut");
         }
     }
 }

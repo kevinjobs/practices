@@ -1,4 +1,5 @@
-﻿using Users.Domain;
+﻿using Microsoft.Extensions.Logging;
+using Users.Domain;
 
 namespace Users.Infrastructure;
 

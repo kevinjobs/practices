@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Graph;
 using System.Reflection;
 using Users.Domain;
 using Users.Infrastructure;
 using Users.WebApi;
 
+// see https://www.cnblogs.com/xieweikang/p/16714565.html
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -15,12 +15,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UserDbContext>(b =>
 {
-    string connStr = builder.Configuration.GetConnectionString("Default");
+    string connStr = builder.Configuration.GetConnectionString("WindowsSql");
     b.UseSqlServer(connStr);
 });
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = "localhost",
+    options.Configuration = "localhost";
     options.InstanceName = "UsersDemo_";
 });
 builder.Services.Configure<MvcOptions>(options =>
@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
